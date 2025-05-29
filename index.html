@@ -601,16 +601,48 @@
         }
 
         // Authentication functions
-        function login() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            const user = gameData.users.find(u => u.username === username && u.password === password);
-            if (user) {
-                gameData.currentUser = username;
-                showMainPages();
-            } else {
-                alert('Invalid credentials!');
+        async function login() {
+            const usernameInput = document.getElementById('loginUsername');
+            const passwordInput = document.getElementById('loginPassword');
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            if (!username || !password) {
+                alert('Username and password are required.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json(); // Attempt to parse JSON for both success and error cases
+
+                if (response.ok) { // Status in the range 200-299
+                    if (data.token) {
+                        localStorage.setItem('jwtToken', data.token);
+                        gameData.currentUser = data.username; // Backend returns { token, userId, username, message }
+                        showMainPages();
+                        // Clear fields after successful login
+                        usernameInput.value = '';
+                        passwordInput.value = '';
+                    } else {
+                        // This case should ideally not happen if backend sends token on success
+                        console.error('Login successful but no token received:', data);
+                        alert('Login failed: No token received from server.');
+                    }
+                } else {
+                    // Handle errors (4xx, 5xx)
+                    alert(data.error || `Login failed: ${response.statusText || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Login request error:', error);
+                alert('Login request failed. Please check your connection or contact support.');
             }
         }
 
