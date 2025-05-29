@@ -294,6 +294,27 @@
         .link-btn:hover {
             color: #e6e600;
         }
+
+        /* Styles for Team Input Cells in Games Page */
+        .games-input-grid input[type="text"] {
+            padding: 15px 10px; /* Increased vertical and horizontal padding */
+            border: 2px solid #ffff00; /* Yellow border */
+            border-radius: 8px; /* Rounded corners */
+            background: rgba(0, 0, 0, 0.8); /* Consistent background */
+            color: #ffff00; /* Consistent text color */
+            font-size: 18px; /* Slightly increased font size */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus */
+        }
+
+        .games-input-grid input[type="text"]:focus {
+            outline: none; /* Remove default outline */
+            border-color: #e6e600; /* Brighter border on focus */
+            box-shadow: 0 0 12px rgba(255, 255, 0, 0.5); /* Subtle box shadow on focus */
+        }
+
+        .games-input-grid input[type="text"].yellow-input {
+            background: rgba(255, 255, 0, 0.2) !important; /* Ensure yellow-input class is still distinguishable */
+        }
     </style>
 </head>
 <body>
@@ -771,12 +792,12 @@
 
         function checkInputTiming() {
             const now = new Date();
-            const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"}));
-            const day = baku.getDay(); // 0 = Sunday, 1 = Monday, etc.
-            const hour = baku.getHours();
+            // const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"})); // Date object creation moved to isInputTimeValid
+            // const day = baku.getDay(); // No longer needed here, logic moved to isInputTimeValid
+            // const hour = baku.getHours(); // No longer needed here, logic moved to isInputTimeValid
             
-            // Active from Monday 13:00 to Friday 13:00 (GMT+4)
-            const isValid = (day === 1 && hour >= 13) || (day >= 2 && day <= 4) || (day === 5 && hour < 13);
+            // Logic to determine if inputs are active is now centralized in isInputTimeValid()
+            const isValid = isInputTimeValid();
             
             // Update input states
             document.querySelectorAll('#gamesGrid input').forEach(input => {
@@ -790,9 +811,14 @@
             const now = new Date();
             const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"}));
             const day = baku.getDay();
-            const hour = baku.getHours();
+            const hour = baku.getHours(); // 0-23
+
+            // New logic: Active from Sunday 18:00 to Thursday 18:00 (GMT+4)
+            const isValid = (day === 0 && hour >= 18) || // Sunday from 18:00
+                            (day >= 1 && day <= 3) ||   // Monday, Tuesday, Wednesday (all day)
+                            (day === 4 && hour < 18);   // Thursday until 18:00
             
-            return (day === 1 && hour >= 13) || (day >= 2 && day <= 4) || (day === 5 && hour < 13);
+            return isValid;
         }
 
         function confirmRound() {
