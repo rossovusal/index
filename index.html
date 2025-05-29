@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAD TO PS5</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1e1e1e 100%);
+            color: #ffff00;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ffff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #e6e600;
+            transform: translateY(-2px);
+        }
+
+        .login-container, .register-container {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px solid #ffff00;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffff00;
+            font-size: 16px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #e6e600;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+        }
+
+        .btn {
+            background: #ffff00;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #e6e600;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 255, 0, 0.3);
+        }
+
+        .btn:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-red {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .btn-red:hover {
+            background: #cc0000;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #ffff00, #e6e600);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 255, 0, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #e6e600, #cccc00);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page {
+            display: none;
+            background: rgba(255, 255, 0, 0.05);
+            border: 2px solid #ffff00;
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ffff00;
+        }
+
+        .table th {
+            background: #ffff00;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .table td {
+            background: rgba(255, 255, 0, 0.1);
+        }
+
+        .timer {
+            background: #ffff00;
+            color: #000;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .match-item {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffff00;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .yellow-input {
+            background: rgba(255, 255, 0, 0.2) !important;
+        }
+
+        .coefficient-box {
+            background: linear-gradient(45deg, #ffff00, #e6e600);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 2px;
+            font-weight: bold;
+        }
+
+        .rank-change {
+            background: #ffff00;
+            color: #000;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .games-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-row {
+            display: contents;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: #ffff00;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .link-btn:hover {
+            color: #e6e600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="header">
+                <h1>ROAD TO PS5</h1>
+            </div>
+            <div class="login-container">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                </div>
+                <div class="text-center mb-20">
+                    <button class="btn" onclick="login()">
+                        <i class="fas fa-sign-in-alt"></i> LOGIN
+                    </button>
+                </div>
+                <div class="text-center">
+                    <button class="link-btn" onclick="showRegister()">Don't have an account? Register here</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="registerPage" class="page">
+            <div class="header">
+                <h1>ROAD TO PS5</h1>
+            </div>
+            <div class="register-container">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <label for="regUsername">Username</label>
+                    <input type="text" id="regUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm password">
+                </div>
+                <div class="text-center mb-20">
+                    <button class="btn" onclick="register()">
+                        <i class="fas fa-user-plus"></i> REGISTER
+                    </button>
+                </div>
+                <div class="text-center">
+                    <button class="link-btn" onclick="showLogin()">Already have an account? Login here</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Pages -->
+        <div id="mainPages" class="hidden">
+            <div class="header">
+                <h1>ROAD TO PS5</h1>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPage('participants')">
+                    <i class="fas fa-users"></i> PARTICIPANTS
+                </button>
+                <button class="nav-btn" onclick="showPage('hostSchedule')">
+                    <i class="fas fa-calendar"></i> HOST SCHEDULE
+                </button>
+                <button class="nav-btn" onclick="showPage('games')">
+                    <i class="fas fa-gamepad"></i> GAMES
+                </button>
+                <button class="nav-btn" onclick="showPage('round')">
+                    <i class="fas fa-play"></i> ROUND
+                </button>
+                <button class="nav-btn" onclick="showPage('predictions')">
+                    <i class="fas fa-eye"></i> PREDICTIONS
+                </button>
+                <button class="nav-btn" onclick="showPage('matchResults')">
+                    <i class="fas fa-trophy"></i> MATCH RESULTS
+                </button>
+                <button class="nav-btn active" onclick="showPage('tournamentTable')">
+                    <i class="fas fa-table"></i> TOURNAMENT TABLE
+                </button>
+                <button class="nav-btn" onclick="showPage('pipePrediction')">
+                    <i class="fas fa-bullseye"></i> PIPEPREDICTION
+                </button>
+                <button class="nav-btn" onclick="showPage('rules')">
+                    <i class="fas fa-book"></i> RULES
+                </button>
+                <button class="nav-btn btn-red" onclick="resetTournament()">
+                    <i class="fas fa-trash"></i> RESET TOURNAMENT
+                </button>
+            </div>
+
+            <!-- Participants Page -->
+            <div id="participants" class="page">
+                <h2><i class="fas fa-users"></i> Participants</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Participant Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="participantsTable">
+                        <!-- Participants will be loaded here -->
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <button class="btn" id="drawLotsBtn" onclick="drawLots()">
+                        <i class="fas fa-random"></i> DRAW LOTS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Host Schedule Page -->
+            <div id="hostSchedule" class="page">
+                <h2><i class="fas fa-calendar"></i> Host Schedule</h2>
+                <div id="hostScheduleContent">
+                    <p class="text-center">Please complete the draw in Participants page first.</p>
+                </div>
+            </div>
+
+            <!-- Games Page -->
+            <div id="games" class="page">
+                <h2><i class="fas fa-gamepad"></i> Games</h2>
+                <div class="games-input-grid" id="gamesGrid">
+                    <!-- Games inputs will be generated here -->
+                </div>
+                <div class="text-center">
+                    <button class="btn" id="confirmRoundBtn" onclick="confirmRound()">
+                        <i class="fas fa-check"></i> CONFIRM ROUND
+                    </button>
+                </div>
+            </div>
+
+            <!-- Round Page -->
+            <div id="round" class="page">
+                <h2><i class="fas fa-play"></i> Round</h2>
+                <div id="roundTimer" class="timer hidden">48:00:00</div>
+                <div id="roundMatches">
+                    <p class="text-center">Please confirm the round in Games page first.</p>
+                </div>
+                <div class="text-center">
+                    <button class="btn hidden" id="submitPredictionsBtn" onclick="submitPredictions()">
+                        <i class="fas fa-paper-plane"></i> SUBMIT PREDICTIONS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Predictions Page -->
+            <div id="predictions" class="page">
+                <h2><i class="fas fa-eye"></i> Predictions</h2>
+                <div id="predictionsContent">
+                    <p class="text-center">Predictions will appear after the timer expires.</p>
+                </div>
+            </div>
+
+            <!-- Match Results Page -->
+            <div id="matchResults" class="page">
+                <h2><i class="fas fa-trophy"></i> Match Results</h2>
+                <div id="matchResultsContent">
+                    <p class="text-center">No matches to show results for yet.</p>
+                </div>
+                <div class="text-center">
+                    <button class="btn" onclick="calculateResults()">
+                        <i class="fas fa-calculator"></i> CALCULATE RESULTS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tournament Table Page -->
+            <div id="tournamentTable" class="page active">
+                <h2><i class="fas fa-table"></i> Tournament Table</h2>
+                
+                <h3>Current Round Results</h3>
+                <table class="table mb-20">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Participant</th>
+                            <th>Correct Predictions</th>
+                            <th>Coefficients</th>
+                            <th>Final Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="currentRoundTable">
+                        <tr><td colspan="5">No current round data</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Overall Tournament Standings</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Participant</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tournamentStandings">
+                        <tr><td colspan="3">No tournament data yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pipe Prediction Page -->
+            <div id="pipePrediction" class="page">
+                <h2><i class="fas fa-bullseye"></i> PIPEPREDICTION</h2>
+                <div id="pipePredictionForm">
+                    <div class="form-group">
+                        <label for="pipePredictionInput">Enter your prediction</label>
+                        <input type="text" id="pipePredictionInput" placeholder="Enter prediction name">
+                    </div>
+                    <div class="form-group">
+                        <label for="pipePredictionNumber">Select number (1-100)</label>
+                        <select id="pipePredictionNumber">
+                            <!-- Options will be populated based on user's score -->
+                        </select>
+                    </div>
+                    <div class="text-center mb-20">
+                        <button class="btn" onclick="sendPipePrediction()">
+                            <i class="fas fa-paper-plane"></i> SEND PIPEPREDICTION
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-red" onclick="closePipePrediction()">
+                            <i class="fas fa-times"></i> CLOSE PIPEPREDICTION
+                        </button>
+                    </div>
+                </div>
+                <div id="pipePredictionResults" class="hidden">
+                    <!-- Results table will appear here -->
+                </div>
+            </div>
+
+            <!-- Rules Page -->
+            <div id="rules" class="page">
+                <h2><i class="fas fa-book"></i> Rules</h2>
+                <div class="form-group">
+                    <textarea rows="20" placeholder="Tournament rules will be added here..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game data storage
+        let gameData = {
+            users: [
+                { username: 'admin', password: 'admin123' }
+            ],
+            currentUser: null,
+            participants: [],
+            drawCompleted: false,
+            hostSchedule: [],
+            scheduleConfirmed: false,
+            currentGames: [],
+            roundConfirmed: false,
+            roundTimer: null,
+            timerExpired: false,
+            predictions: {},
+            results: {},
+            tournamentScores: {},
+            pipePredictions: [],
+            pipeClosed: false
+        };
+
+        // Initialize game
+        function initGame() {
+            updateGamesInputs();
+            updateParticipantsTable();
+            checkInputTiming();
+            setInterval(checkInputTiming, 60000); // Check every minute
+        }
+
+        // Authentication functions
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = gameData.users.find(u => u.username === username && u.password === password);
+            if (user) {
+                gameData.currentUser = username;
+                showMainPages();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function register() {
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            if (!username || !password) {
+                alert('Please fill all fields!');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (gameData.users.find(u => u.username === username)) {
+                alert('Username already exists!');
+                return;
+            }
+            
+            gameData.users.push({ username, password });
+            gameData.participants.push(username);
+            gameData.tournamentScores[username] = 0;
+            alert('Registration successful!');
+            showLogin();
+        }
+
+        function logout() {
+            gameData.currentUser = null;
+            showLogin();
+        }
+
+        function showLogin() {
+            document.getElementById('loginPage').classList.add('active');
+            document.getElementById('registerPage').classList.remove('active');
+            document.getElementById('mainPages').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('registerPage').classList.add('active');
+        }
+
+        function showMainPages() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('registerPage').classList.remove('active');
+            document.getElementById('mainPages').classList.remove('hidden');
+            showPage('tournamentTable');
+        }
+
+        // Navigation
+        function showPage(pageName) {
+            // Remove active class from all pages and nav buttons
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show selected page and highlight nav button
+            document.getElementById(pageName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Update content based on page
+            if (pageName === 'participants') {
+                updateParticipantsTable();
+            } else if (pageName === 'pipePrediction') {
+                updatePipePredictionDropdown();
+            }
+        }
+
+        // Participants functions
+        function updateParticipantsTable() {
+            const tbody = document.getElementById('participantsTable');
+            tbody.innerHTML = '';
+            
+            gameData.participants.forEach((participant, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${participant}</td>
+                `;
+            });
+        }
+
+        function drawLots() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            // Shuffle participants for 4 rounds
+            const shuffled = [...gameData.participants];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            gameData.hostSchedule = [];
+            for (let round = 1; round <= 4; round++) {
+                shuffled.forEach(participant => {
+                    gameData.hostSchedule.push({
+                        round,
+                        participant,
+                        date: ''
+                    });
+                });
+            }
+            
+            gameData.drawCompleted = true;
+            document.getElementById('drawLotsBtn').disabled = true;
+            updateHostSchedule();
+            alert('Draw completed successfully!');
+        }
+
+        function updateHostSchedule() {
+            const content = document.getElementById('hostScheduleContent');
+            if (!gameData.drawCompleted) {
+                content.innerHTML = '<p class="text-center">Please complete the draw in Participants page first.</p>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Round</th><th>Participant</th><th>Date (DD-MM-YYYY)</th></tr></thead><tbody>';
+            
+            gameData.hostSchedule.forEach((item, index) => {
+                html += `
+                    <tr>
+                        <td>${item.round}</td>
+                        <td>${item.participant}</td>
+                        <td><input type="date" ${gameData.scheduleConfirmed ? 'disabled' : ''} 
+                                  onchange="updateScheduleDate(${index}, this.value)"></td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            
+            if (!gameData.scheduleConfirmed) {
+                html += '<div class="text-center"><button class="btn" onclick="confirmHostSchedule()"><i class="fas fa-check"></i> CONFIRM HOST SCHEDULE</button></div>';
+            }
+            
+            content.innerHTML = html;
+        }
+
+        function updateScheduleDate(index, date) {
+            gameData.hostSchedule[index].date = date;
+        }
+
+        function confirmHostSchedule() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            gameData.scheduleConfirmed = true;
+            updateHostSchedule();
+            alert('Host schedule confirmed!');
+        }
+
+        // Games functions
+        function updateGamesInputs() {
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 12; i++) {
+                const isYellow = i >= 11;
+                grid.innerHTML += `
+                    <input type="text" id="team1_${i}" placeholder="Team 1 - Match ${i}" 
+                           class="${isYellow ? 'yellow-input' : ''}" 
+                           ${!isInputTimeValid() ? 'disabled' : ''}>
+                    <input type="text" id="team2_${i}" placeholder="Team 2 - Match ${i}" 
+                           class="${isYellow ? 'yellow-input' : ''}" 
+                           ${!isInputTimeValid() ? 'disabled' : ''}>
+                `;
+            }
+        }
+
+        function checkInputTiming() {
+            const now = new Date();
+            const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"}));
+            const day = baku.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const hour = baku.getHours();
+            
+            // Active from Monday 13:00 to Friday 13:00 (GMT+4)
+            const isValid = (day === 1 && hour >= 13) || (day >= 2 && day <= 4) || (day === 5 && hour < 13);
+            
+            // Update input states
+            document.querySelectorAll('#gamesGrid input').forEach(input => {
+                input.disabled = !isValid || gameData.roundConfirmed;
+            });
+            
+            document.getElementById('confirmRoundBtn').disabled = gameData.roundConfirmed;
+        }
+
+        function isInputTimeValid() {
+            const now = new Date();
+            const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"}));
+            const day = baku.getDay();
+            const hour = baku.getHours();
+            
+            return (day === 1 && hour >= 13) || (day >= 2 && day <= 4) || (day === 5 && hour < 13);
+        }
+
+        function confirmRound() {
+            const password = prompt('Enter your login password:');
+            if (password !== gameData.users.find(u => u.username === gameData.currentUser)?.password) {
+                alert('Incorrect password!');
+                return;
+            }
+            
+            // Check if all fields are filled
+            let allFilled = true;
+            gameData.currentGames = [];
+            
+            for (let i = 1; i <= 12; i++) {
+                const team1 = document.getElementById(`team1_${i}`).value;
+                const team2 = document.getElementById(`team2_${i}`).value;
+                
+                if (!team1 || !team2) {
+                    allFilled = false;
+                    break;
+                }
+                
+                gameData.currentGames.push({ team1, team2 });
+            }
+            
+            if (!allFilled) {
+                alert('Please fill all team fields!');
+                return;
+            }
+            
+            gameData.roundConfirmed = true;
+            startRoundTimer();
+            updateRoundPage();
+            checkInputTiming();
+            alert('Round confirmed! Timer started.');
+        }
+
+        function startRoundTimer() {
+            let timeLeft = 48 * 60 * 60; // 48 hours in seconds
+            
+            gameData.roundTimer = setInterval(() => {
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                
+                document.getElementById('roundTimer').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                timeLeft--;
+                
+                if (timeLeft < 0) {
+                    clearInterval(gameData.roundTimer);
+                    gameData.timerExpired = true;
+                    document.getElementById('roundTimer').textContent = '00:00:00';
+                    disableRoundInputs();
+                    showPredictions();
+                }
+            }, 1000);
+        }
+
+        function updateRoundPage() {
+            if (!gameData.roundConfirmed) {
+                document.getElementById('roundMatches').innerHTML = '<p class="text-center">Please confirm the round in Games page first.</p>';
+                return;
+            }
+            
+            document.getElementById('roundTimer').classList.remove('hidden');
+            
+            let html = '<div class="matches-grid">';
+            gameData.currentGames.forEach((game, index) => {
+                html += `
+                    <div class="match-item">
+                        <h4>${game.team1} vs ${game.team2}</h4>
+                        <select id="prediction_${index}" ${gameData.timerExpired ? 'disabled' : ''}>
+                            <option value="">Select prediction</option>
+                            <option value="1">1</option>
+                            <option value="X">X</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            document.getElementById('roundMatches').innerHTML = html;
+            document.getElementById('submitPredictionsBtn').classList.remove('hidden');
+        }
+
+        function submitPredictions() {
+            const password = prompt('Enter your login password:');
+            if (password !== gameData.users.find(u => u.username === gameData.currentUser)?.password) {
+                alert('Incorrect password!');
+                return;
+            }
+            
+            const userPredictions = [];
+            let allSelected = true;
+            
+            gameData.currentGames.forEach((game, index) => {
+                const prediction = document.getElementById(`prediction_${index}`).value;
+                if (!prediction) {
+                    allSelected = false;
+                }
+                userPredictions.push(prediction);
+            });
+            
+            if (!allSelected) {
+                alert('Please make predictions for all matches!');
+                return;
+            }
+            
+            if (!gameData.predictions[gameData.currentUser]) {
+                gameData.predictions[gameData.currentUser] = [];
+            }
+            gameData.predictions[gameData.currentUser] = userPredictions;
+            
+            document.getElementById('submitPredictionsBtn').disabled = true;
+            alert('Predictions submitted successfully!');
+        }
+
+        function disableRoundInputs() {
+            document.querySelectorAll('#roundMatches select').forEach(select => {
+                select.disabled = true;
+            });
+        }
+
+        function showPredictions() {
+            const content = document.getElementById('predictionsContent');
+            
+            if (!gameData.timerExpired) {
+                content.innerHTML = '<p class="text-center">Predictions will appear after the timer expires.</p>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Match</th>';
+            Object.keys(gameData.predictions).forEach(user => {
+                html += `<th>${user}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+            
+            gameData.currentGames.forEach((game, index) => {
+                html += `<tr><td>${game.team1} vs ${game.team2}</td>`;
+                Object.keys(gameData.predictions).forEach(user => {
+                    const prediction = gameData.predictions[user][index] || '-';
+                    html += `<td>${prediction}</td>`;
+                });
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            content.innerHTML = html;
+        }
+
+        function calculateResults() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            // Get results from match results page
+            const results = [];
+            gameData.currentGames.forEach((game, index) => {
+                const resultSelect = document.getElementById(`result_${index}`);
+                results.push(resultSelect ? resultSelect.value || '0' : '0');
+            });
+            
+            // Calculate scores for each participant
+            const roundScores = {};
+            
+            Object.keys(gameData.predictions).forEach(user => {
+                let correctPredictions = 0;
+                const coefficients = [];
+                
+                gameData.predictions[user].forEach((prediction, index) => {
+                    if (prediction === results[index]) {
+                        correctPredictions++;
+                        
+                        // Calculate coefficient (how many people made same prediction)
+                        let sameCount = 0;
+                        Object.values(gameData.predictions).forEach(userPreds => {
+                            if (userPreds[index] === prediction) sameCount++;
+                        });
+                        coefficients.push(sameCount);
+                    }
+                });
+                
+                // Calculate final score (only if at least 3 correct predictions)
+                let finalScore = 0;
+                if (correctPredictions >= 3) {
+                    const rank = calculateRank(user, correctPredictions, coefficients);
+                    finalScore = Math.max(0, 10 - rank);
+                }
+                
+                roundScores[user] = {
+                    correct: correctPredictions,
+                    coefficients,
+                    finalScore
+                };
+                
+                // Add to tournament total
+                gameData.tournamentScores[user] = (gameData.tournamentScores[user] || 0) + finalScore;
+            });
+            
+            updateTournamentTable(roundScores);
+            alert('Results calculated successfully!');
+        }
+
+        function calculateRank(user, correctPredictions, coefficients) {
+            const users = Object.keys(gameData.predictions);
+            let rank = 1;
+            
+            users.forEach(otherUser => {
+                if (otherUser === user) return;
+                
+                const otherPredictions = gameData.predictions[otherUser];
+                let otherCorrect = 0;
+                const otherCoefficients = [];
+                
+                // Calculate other user's stats (similar logic)
+                // This is simplified - in full implementation, you'd calculate all users' stats first
+                
+                // Compare and adjust rank accordingly
+            });
+            
+            return rank;
+        }
+
+        function updateTournamentTable(roundScores = null) {
+            // Update current round table
+            if (roundScores) {
+                const currentTable = document.getElementById('currentRoundTable');
+                currentTable.innerHTML = '';
+                
+                Object.keys(roundScores).forEach((user, index) => {
+                    const data = roundScores[user];
+                    const row = currentTable.insertRow();
+                    
+                    const coefficientsHtml = data.coefficients.map(c => 
+                        `<span class="coefficient-box">${c}</span>`
+                    ).join('');
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${user}</td>
+                        <td>${data.correct}</td>
+                        <td>${coefficientsHtml}</td>
+                        <td>${data.finalScore}</td>
+                    `;
+                });
+            }
+            
+            // Update tournament standings
+            const standingsTable = document.getElementById('tournamentStandings');
+            standingsTable.innerHTML = '';
+            
+            // Sort users by total score
+            const sortedUsers = Object.keys(gameData.tournamentScores)
+                .sort((a, b) => gameData.tournamentScores[b] - gameData.tournamentScores[a]);
+            
+            sortedUsers.forEach((user, index) => {
+                const row = standingsTable.insertRow();
+                row.innerHTML = `
+                    <td>
+                        <span class="rank-change">↔</span>
+                        ${index + 1}
+                    </td>
+                    <td>${user}</td>
+                    <td>${gameData.tournamentScores[user]}</td>
+                `;
+            });
+        }
+
+        function updateMatchResults() {
+            const content = document.getElementById('matchResultsContent');
+            
+            if (!gameData.roundConfirmed) {
+                content.innerHTML = '<p class="text-center">No matches to show results for yet.</p>';
+                return;
+            }
+            
+            let html = '<div class="matches-grid">';
+            gameData.currentGames.forEach((game, index) => {
+                html += `
+                    <div class="match-item">
+                        <h4>${game.team1} vs ${game.team2}</h4>
+                        <select id="result_${index}">
+                            <option value="">Select result</option>
+                            <option value="1">1</option>
+                            <option value="X">X</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            content.innerHTML = html;
+        }
+
+        function updatePipePredictionDropdown() {
+            const select = document.getElementById('pipePredictionNumber');
+            const userScore = gameData.tournamentScores[gameData.currentUser] || 0;
+            
+            select.innerHTML = '<option value="">Select number</option>';
+            for (let i = 1; i <= Math.min(100, userScore); i++) {
+                select.innerHTML += `<option value="${i}">${i}</option>`;
+            }
+        }
+
+        function sendPipePrediction() {
+            const password = prompt('Enter your login password:');
+            if (password !== gameData.users.find(u => u.username === gameData.currentUser)?.password) {
+                alert('Incorrect password!');
+                return;
+            }
+            
+            const prediction = document.getElementById('pipePredictionInput').value;
+            const number = document.getElementById('pipePredictionNumber').value;
+            
+            if (!prediction || !number) {
+                alert('Please fill all fields!');
+                return;
+            }
+            
+            gameData.pipePredictions.push({
+                user: gameData.currentUser,
+                prediction,
+                number: parseInt(number),
+                result: null
+            });
+            
+            alert('Pipe prediction submitted!');
+            document.getElementById('pipePredictionInput').value = '';
+            document.getElementById('pipePredictionNumber').value = '';
+        }
+
+        function closePipePrediction() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            gameData.pipeClosed = true;
+            document.getElementById('pipePredictionForm').classList.add('hidden');
+            
+            // Show results table
+            let html = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Participant</th>
+                            <th>Prediction Name</th>
+                            <th>Entry</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            gameData.pipePredictions.forEach((pred, index) => {
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${pred.user}</td>
+                        <td>${pred.prediction}</td>
+                        <td>${pred.number}</td>
+                        <td>
+                            <select id="pipeResult_${index}">
+                                <option value="">Select</option>
+                                <option value="correct">Correct</option>
+                                <option value="incorrect">Incorrect</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <button class="btn" onclick="calculatePipePredictions()">
+                        <i class="fas fa-calculator"></i> CALCULATE PIPEPREDICTIONS
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('pipePredictionResults').innerHTML = html;
+            document.getElementById('pipePredictionResults').classList.remove('hidden');
+        }
+
+        function calculatePipePredictions() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            gameData.pipePredictions.forEach((pred, index) => {
+                const resultSelect = document.getElementById(`pipeResult_${index}`);
+                const result = resultSelect.value;
+                
+                if (result === 'correct') {
+                    gameData.tournamentScores[pred.user] += pred.number;
+                } else if (result === 'incorrect') {
+                    gameData.tournamentScores[pred.user] -= pred.number;
+                }
+            });
+            
+            updateTournamentTable();
+            alert('Pipe predictions calculated!');
+        }
+
+        function resetTournament() {
+            const code = prompt('Enter security code:');
+            if (code !== 'Baku2025!') {
+                alert('Incorrect security code!');
+                return;
+            }
+            
+            // Reset all game data except users
+            const users = [...gameData.users];
+            gameData = {
+                users: users,
+                currentUser: null,
+                participants: [],
+                drawCompleted: false,
+                hostSchedule: [],
+                scheduleConfirmed: false,
+                currentGames: [],
+                roundConfirmed: false,
+                roundTimer: null,
+                timerExpired: false,
+                predictions: {},
+                results: {},
+                tournamentScores: {},
+                pipePredictions: [],
+                pipeClosed: false
+            };
+            
+            alert('Tournament reset successfully!');
+            logout();
+        }
+
+        // Initialize the game when page loads
+        window.onload = function() {
+            initGame();
+            
+            // Show match results page content when navigated to
+            document.addEventListener('click', function(e) {
+                if (e.target.textContent === 'MATCH RESULTS' || e.target.closest('button')?.textContent?.includes('MATCH RESULTS')) {
+                    setTimeout(updateMatchResults, 100);
+                }
+            });
+        };
+
+        // Reset current round every Friday at 13:00 GMT+4
+        function checkFridayReset() {
+            const now = new Date();
+            const baku = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Baku"}));
+            
+            if (baku.getDay() === 5 && baku.getHours() === 13 && baku.getMinutes() === 0) {
+                // Reset current round data
+                document.getElementById('currentRoundTable').innerHTML = '<tr><td colspan="5">No current round data</td></tr>';
+                gameData.predictions = {};
+                gameData.roundConfirmed = false;
+                gameData.timerExpired = false;
+                gameData.currentGames = [];
+                
+                if (gameData.roundTimer) {
+                    clearInterval(gameData.roundTimer);
+                }
+                
+                updateGamesInputs();
+            }
+        }
+        
+        // Check for Friday reset every minute
+        setInterval(checkFridayReset, 60000);
+    </script>
+</body>
+</html>
